@@ -1,5 +1,3 @@
-// ./Connection/azureCosmos.connection.js
-
 const { MongoClient } = require("mongodb");
 const path = require("path");
 require("dotenv").config({ path: require("find-config")(".env") });
@@ -15,7 +13,6 @@ const azureCosmosConnection = async () => {
     const database = client.db("social");
     const collection = database.collection("socialCollection");
     console.log("Connected to Azure Cosmos DB");
-    // ... Perform any further operations or return the collection as needed
   } catch (error) {
     console.log("Error connecting to Azure Cosmos DB:", error);
   }

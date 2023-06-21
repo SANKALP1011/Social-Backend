@@ -7,7 +7,7 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const keys = require("./Configuration/google.config");
 const User = require("./Model/user.model");
-const authRoutes = require("./Routes/auth.router");
+const authRoutes = require("./Routes/googleAuth.router");
 
 passport.use(
   new GoogleStrategy(
@@ -16,16 +16,11 @@ passport.use(
       clientSecret: keys.googleKey.clientSecret,
       callbackURL: keys.googleKey.callbackURL,
     },
-    function (accessToken, refreshToken, profile, done) {
-      // Verify the user's credentials and retrieve the user object
-      // You can customize this function to query your MongoDB and retrieve/save the user data
+    async function (accessToken, refreshToken, profile, done) {
+      try {
+        console.log(profile);
+        let user = await User.findOne({ googleId: profile.id });
 
-      // Example implementation:
-      
-      User.findOne({ googleId: profile.id }, function (err, user) {
-        if (err) {
-          return done(err);
-        }
         if (!user) {
           const newUser = new User({
             UserMail: profile.emails[0].value,
@@ -33,19 +28,28 @@ passport.use(
             googleId: profile.id,
           });
           console.log(newUser);
-          newUser.save(function (err) {
-            if (err) {
-              return done(err);
-            }
-            return done(null, newUser);
-          });
-        } else {
-          return done(null, user);
+          user = await newUser.save();
         }
-      });
+        return done(null, user);
+      } catch (err) {
+        return done(err);
+      }
     }
   )
 );
+
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async function (id, done) {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
 
 app.use("/auth", authRoutes);
 
