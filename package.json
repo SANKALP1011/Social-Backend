@@ -1,0 +1,15 @@
+{
+  "name": "social-backend",
+  "version": "1.0.0",
+  "description": "This the backend for the internship test",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sankalp",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22"
+  }
+}
