@@ -1,4 +1,3 @@
-const express = require("express");
 const passport = require("passport");
 
 module.exports = {
@@ -7,7 +6,7 @@ module.exports = {
   }),
 
   googleAuthCallback: passport.authenticate("google", {
-    successRedirect: "/protectedRoutes",
+    successRedirect: "/auth/protectedRoutes",
     failureRedirect: "/login",
   }),
 
