@@ -4,14 +4,20 @@ const passport = require("passport");
 const mongoose = require("mongoose");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const TwitterStrategy = require("passport-twitter").Strategy;
+const FacebookStrategy = require("passport-facebook").Strategy;
+const GithubStrategy = require("passport-github2").Strategy;
 const keys = require("./Configuration/keys.config");
 const User = require("./Model/user.model");
 const UserTwitterModel = require("./Model/UserTwitter.model");
+const UserFacebookModel = require("./Model/Userfacebook.model");
 const authRoutes = require("./Routes/googleAuth.router");
 const twitterAuthRoutes = require("./Routes/twitterAuth.router");
+const facebookAuthRoutes = require("./Routes/facebookAuth.router");
+const githubRoutes = require("./Routes/githubAuth.router");
 const ProtectedRoutes = require("./Routes/protectedRoutes.router");
 require("dotenv").config({ path: require("find-config")(".env") });
 const session = require("express-session");
+const UserGithubModel = require("./Model/UserGithub.model");
 
 mongoose
   .connect(process.env.MONGO_CONN_STRING)
@@ -36,7 +42,7 @@ passport.use(
       clientSecret: keys.googleKey.clientSecret,
       callbackURL: keys.googleKey.callbackURL,
     },
-    async (accessToken, refreshToken, profile, done) => {
+    async (req, accessToken, refreshToken, profile, done) => {
       try {
         let user = await User.findOne({ googleId: profile.id });
 
@@ -64,7 +70,7 @@ passport.use(
       consumerSecret: keys.twitterKey.consumerSecret,
       callbackURL: keys.twitterKey.callbackURL,
     },
-    async (token, tokenSecret, profile, done) => {
+    async (req, token, tokenSecret, profile, done) => {
       try {
         let user = await UserTwitterModel.findOne({ TwitterId: profile.id });
         if (!user) {
@@ -89,22 +95,79 @@ passport.use(
   )
 );
 
+passport.use(
+  new FacebookStrategy(
+    {
+      clientID: keys.faceBookKey.clientID,
+      clientSecret: keys.faceBookKey.clientSecret,
+      callbackURL: keys.faceBookKey.callbackURL,
+    },
+    async (req, accessToken, refreshToken, profile, done) => {
+      try {
+        let user = await UserFacebookModel.findOne({ facebookId: profile.id });
+        if (!user) {
+          const newUser = new UserFacebookModel({
+            facebookId: profile.id,
+            FaceBookUserName: profile.displayName,
+            Gender: profile.gender,
+          });
+          console.log(newUser);
+          await newUser.save();
+        }
+        return done(null, user);
+      } catch (err) {
+        return done(err);
+      }
+    }
+  )
+);
+
+passport.use(
+  new GithubStrategy(
+    {
+      clientID: keys.githubKey.clientID,
+      clientSecret: keys.githubKey.clientSecret,
+      callbackURL: keys.githubKey.callbackURL,
+    },
+    async (req, accessToken, refreshToken, profile, done) => {
+      try {
+        let user = await UserGithubModel.findOne({ GithubId: profile.id });
+        if (!user) {
+          const newUser = new UserGithubModel({
+            GithubId: profile.id,
+            GithubUsername: profile.username,
+            Type: profile._json.type,
+            Portfolio: profile._json.blog,
+            PublicRepos: profile._json.public_repos,
+            Followers: profile._json.followers,
+            Following: profile._json.following,
+          });
+          console.log(newUser);
+          await newUser.save();
+        }
+        return done(null, user);
+      } catch (err) {
+        return done(err);
+      }
+    }
+  )
+);
+
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user);
 });
 
-passport.deserializeUser(async (id, done) => {
-  try {
-    const user = await User.findById(id);
-    done(null, user);
-  } catch (err) {
-    done(err);
-  }
+passport.deserializeUser((user, done) => {
+  done(null, user);
 });
 
+app.use(passport.initialize());
+app.use(passport.session());
 app.use("/auth", authRoutes);
 app.use("/auth", twitterAuthRoutes);
+app.use("/auth", facebookAuthRoutes);
 app.use("/auth", ProtectedRoutes);
+app.use("/auth", githubRoutes);
 
 app.listen("3002", (err) => {
   if (err) {
