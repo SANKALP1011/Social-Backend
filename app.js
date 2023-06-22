@@ -18,6 +18,7 @@ const ProtectedRoutes = require("./Routes/protectedRoutes.router");
 require("dotenv").config({ path: require("find-config")(".env") });
 const session = require("express-session");
 const UserGithubModel = require("./Model/UserGithub.model");
+const analysisRoutes = require("./Routes/statisticalAnalysis.router");
 
 mongoose
   .connect(process.env.MONGO_CONN_STRING)
@@ -168,6 +169,7 @@ app.use("/auth", twitterAuthRoutes);
 app.use("/auth", facebookAuthRoutes);
 app.use("/auth", ProtectedRoutes);
 app.use("/auth", githubRoutes);
+app.use("/anaylsis", analysisRoutes);
 
 app.listen("3002", (err) => {
   if (err) {
