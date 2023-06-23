@@ -61,7 +61,7 @@ The project utilizes the following technologies:
 
 ## Folder Structure
  - Controller
-   ```
+   ``` javascript
    - facebook.controller.js
    - github.controller.js
    - google.controller.js
@@ -73,7 +73,7 @@ The project utilizes the following technologies:
    - initial.controller.js
   
  - Routes
-```
+``` javascript
    - facebookAuth.router.js
    - googleAuth.router.js
    - twitterAuth.router.js
@@ -84,32 +84,32 @@ The project utilizes the following technologies:
    - unProtectedRoutes.router.js
 ```   
   - Middleware
-    ```
+    ``` javascript
     - loggedIn.middleware.js (current , I am not using this middleware anywhere)
     ```
 ## Endpoints
  - Statistical Analysis (PROVIDE STATISTICAL ANALYSIS)
-    ```
+    ``` javascript
     AnalysisRouter.get("/getAnalysisData", performStatisticalAnalysis);
     ```
  - Google Oauth endpoint (PROVIDE GOOGLE AUTH)
-   ```
+   ``` javascript
    GoogleRouter.get("/google", googleControllert.googleAuth);
    GoogleRouter.get("/google/callback", googleControllert.googleAuthCallback);
    GoogleRouter.get("/google/logout", googleControllert.logout);
     ```
  - Twitter Oauth endpoint (PROVIDE TWITTER AUTH)
-   ```
+   ``` javascript
    TwitterRouter.get("/twitter", TwitterController.twitterAuth);
    TwitterRouter.get("/twitter/callback", TwitterController.twitterAuthCallback);
    ```
  - Github Oauth endpoint (PROVIDE GITHUB AUTH)
-   ```
+   ``` javascript
    GithubRouter.get("/github", GithubController.githubAuth);
    GithubRouter.get("/github/callback", GithubController.githubAuthCallback);
    ```
  - Facebook Oauth endpoint (PROVIDE FACEBOOK AUTH)
-   ```
+   ``` javascript
    FaceBookRouter.get("/facebook", FacebookController.facebookAuth);
    FaceBookRouter.get(
     "/facebook/callback",
@@ -119,7 +119,7 @@ The project utilizes the following technologies:
  - Other such as protected and unprotected routes
 
 ## Analysis Endpoint Response from diffrent identity providers
-[
+``` javascript
 {
     "googleUsers": 3,
     "twitterUsers": 2,
@@ -130,7 +130,7 @@ The project utilizes the following technologies:
     "totalGithubRepositories": 33,
     "totalDistinctLocations": 2
 }
-]
+```
 
 
 ## Getting Started
@@ -143,7 +143,7 @@ The project utilizes the following technologies:
 2. Replace the mongodb uri string with your own uri string , provided by your mongodb cluster.
 3. Passport.js oAuth startergies uses client id , client secret and callBack url for the authentication so replace those values with your own access keys provided by the diffrent identity providers. I am using four identity providers which are google , twitter , github and Facebook.
 
-```
+``` javascript
 module.exports = {
   googleKey: {
     clientID: CLIENT_ID,
@@ -171,7 +171,7 @@ Replace the key here with your key.
 
 4. Run the application on your machine with the help of
    
-   ```
+   ``` bash
    nodemon app.js
    ```
 5. Build the docker container with the help of following command
