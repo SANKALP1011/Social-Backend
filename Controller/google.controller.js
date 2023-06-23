@@ -10,14 +10,6 @@ module.exports = {
     failureRedirect: "/login",
   }),
 
-  isLoggedIn: (req, res, next) => {
-    if (req.isAuthenticated()) {
-      next();
-    } else {
-      res.redirect("/login");
-    }
-  },
-
   logout: (req, res) => {
     req.logout();
     res.redirect("/login");
