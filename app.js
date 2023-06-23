@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const passport = require("passport");
 const mongoose = require("mongoose");
+const { saveKeysToAzureVault } = require("./Vault/azureKey.vault");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const TwitterStrategy = require("passport-twitter").Strategy;
 const FacebookStrategy = require("passport-facebook").Strategy;
