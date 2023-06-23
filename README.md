@@ -118,6 +118,21 @@ The project utilizes the following technologies:
    ```
  - Other such as protected and unprotected routes
 
+## Analysis Endpoint Response from diffrent identity providers
+[
+{
+    "googleUsers": 3,
+    "twitterUsers": 2,
+    "facebookUsers": 1,
+    "githubUsers": 1,
+    "averageTwitterFollowers": 42,
+    "averageGithubUsers": 1,
+    "totalGithubRepositories": 33,
+    "totalDistinctLocations": 2
+}
+]
+
+
 ## Getting Started
 
 1. Clone the repository:
