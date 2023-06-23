@@ -17,6 +17,7 @@ The project utilizes the following technologies:
 - MongoDB
 - Docker
 - Passport OAuth
+- Kubernetes
 
 ## Container
 
@@ -30,6 +31,33 @@ The project utilizes the following technologies:
     ```
      docker run -p 3002:3002 socialbackend
     ```
+## Kubernetes Cluster Deploymemt
+   1. Check for any deployment that already exists with the following command
+      ```
+      kubectl get deployment
+      ```
+
+   2. Check for any service that already exists and is running with the help of of following command
+      ```
+      kubectl get svc
+      ```
+   3. Deploy and apply the changes to kubernetes cluster by using the deployment.yaml file with the the following command
+      ```
+      kubectl apply -f deployment.yaml
+      ```
+   4. Apply and push your service.yaml file for your kubernetes cluster with following command
+      ```
+      kubectl apply -f service.yaml
+      ```
+   5. Check whether your kubernetes service and deployment is up and running by the following command
+      ```
+      kubectl get deployments    (to check deployment status)
+      kubectl get svc            (to check service status)
+
+    6. Run your kubernetes service with the help of following command
+       ```
+       minikube service social-backend-service
+       ```
 
 ## Folder Structure
  - Controller
@@ -38,9 +66,11 @@ The project utilizes the following technologies:
    - github.controller.js
    - google.controller.js
    - twitter.controller.js
-   - passport.controller.js
+   - passportStartegies.controller.js
    - protected.controller.js
    - statisticalAnalysis.controller.js
+   - unprotected.controller.js
+   - initial.controller.js
   
  - Routes
 ```
@@ -51,33 +81,34 @@ The project utilizes the following technologies:
    - unProtectedRoutes.router.js
    - statisticalAnalysis.router.js
    - githubAuth.router.js
+   - unProtectedRoutes.router.js
 ```   
   - Middleware
     ```
     - loggedIn.middleware.js (current , I am not using this middleware anywhere)
     ```
 ## Endpoints
- - Statistical Analysis
+ - Statistical Analysis (PROVIDE STATISTICAL ANALYSIS)
     ```
     AnalysisRouter.get("/getAnalysisData", performStatisticalAnalysis);
     ```
- - Google Oauth endpoint
+ - Google Oauth endpoint (PROVIDE GOOGLE AUTH)
    ```
    GoogleRouter.get("/google", googleControllert.googleAuth);
    GoogleRouter.get("/google/callback", googleControllert.googleAuthCallback);
    GoogleRouter.get("/google/logout", googleControllert.logout);
     ```
- - Twitter Oauth endpoint
+ - Twitter Oauth endpoint (PROVIDE TWITTER AUTH)
    ```
    TwitterRouter.get("/twitter", TwitterController.twitterAuth);
    TwitterRouter.get("/twitter/callback", TwitterController.twitterAuthCallback);
    ```
- - Github Oauth endpoint
+ - Github Oauth endpoint (PROVIDE GITHUB AUTH)
    ```
    GithubRouter.get("/github", GithubController.githubAuth);
    GithubRouter.get("/github/callback", GithubController.githubAuthCallback);
    ```
- - Facebook Oauth endpoint
+ - Facebook Oauth endpoint (PROVIDE FACEBOOK AUTH)
    ```
    FaceBookRouter.get("/facebook", FacebookController.facebookAuth);
    FaceBookRouter.get(
