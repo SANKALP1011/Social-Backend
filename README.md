@@ -20,9 +20,13 @@ The project utilizes the following technologies:
 - Kubernetes
 
 ## Testing Url
+- Please add your preferred endpoint from the given list of endpoints while testing the api
 ```
  http://localhost:3002/
 ```
+
+## Note
+> Due to safety concerns, Don't perform the oauth authentication on the deployed url to heroku.
 
 ## Container
 
