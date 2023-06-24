@@ -51,12 +51,13 @@ The project utilizes the following technologies:
       ```
    5. Check whether your kubernetes service and deployment is up and running by the following command
       ```
-      kubectl get deployments    (to check deployment status)
-      kubectl get svc            (to check service status)
-
-    6. Run your kubernetes service with the help of following command
+        kubectl get deployments    (to check deployment status)
+        kubectl get svc            (to check service status)
+      ```
+   
+   6. Run your kubernetes service with the help of following command
        ```
-       minikube service social-backend-service
+          minikube service social-backend-service
        ```
 
 ## Folder Structure
