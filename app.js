@@ -108,7 +108,7 @@ app.use("/auth", ProtectedRoutes);
 app.use("/auth", githubRoutes);
 app.use("/anaylsis", analysisRoutes);
 
-app.listen("3002", (err) => {
+app.listen(process.env.PORT || "3002", (err) => {
   if (err) {
     console.log(err);
   } else {
