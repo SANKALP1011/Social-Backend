@@ -25,8 +25,8 @@ The project utilizes the following technologies:
  http://localhost:3002/
 ```
 
-## Note
-> Due to safety concerns, Don't perform the oauth authentication on the deployed url to heroku.
+# Note
+> Due to safety concerns, Don't perform the oauth authentication on the deployed url to heroku. That deployement is url is not authenticated as the callback url.
 
 ## Container
 
