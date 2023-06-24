@@ -19,6 +19,11 @@ The project utilizes the following technologies:
 - Passport OAuth
 - Kubernetes
 
+## Testing Url
+```
+ http://localhost:3002/
+```
+
 ## Container
 
  Docker ( I am using docker for the containerisation of my application )
