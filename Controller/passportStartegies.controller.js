@@ -76,6 +76,7 @@ module.exports = {
           Followers: profile._json.followers,
           Following: profile._json.following,
         });
+
         console.log(newUser);
         await newUser.save();
       }
